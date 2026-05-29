@@ -1,10 +1,24 @@
 import { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import L from "leaflet";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 
-const API_URL = "http://localhost:8001";
+// ── FIX LEAFLET MARKER ICON (Vite bug fix) ──
+import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: markerIcon2x,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+});
+
+// ── API URL (Render backend) ──
+const API_URL = "https://geosield-backend.onrender.com";
 
 function App() {
   const [districts, setDistricts]   = useState(null);
